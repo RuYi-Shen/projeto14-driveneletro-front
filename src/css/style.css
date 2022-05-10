@@ -1,0 +1,20 @@
+/******************************** Global Configuration ********************************/
+
+* {
+    box-sizing: border-box;
+    word-break: break-word;
+
+    --white-base: #FFFFFF;
+    --black-base: #000000;
+}
+
+body {
+    background-color: var(--white-base);
+    font-family: 'Raleway', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+}
+
+button:hover {
+    cursor: pointer;
+}
