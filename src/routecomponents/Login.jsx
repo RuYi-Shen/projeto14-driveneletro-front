@@ -23,7 +23,7 @@ const Div = styled.div`
     text-align: center;
     justify-content: center;
     align-items: center;
-    color: var(--black-base);
+    color: var(--white-base);
     font-size: 30px;
 
     a {

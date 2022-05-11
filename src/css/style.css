@@ -6,10 +6,12 @@
 
     --white-base: #FFFFFF;
     --black-base: #000000;
+    --blue-base: #14073A;
+    --blue-button: #478EA5;
 }
 
 body {
-    background-color: var(--white-base);
+    background-color: var(--blue-base);
     font-family: 'Raleway', sans-serif;
     font-style: normal;
     font-weight: 400;
