@@ -1,7 +1,7 @@
-export default function Login() {
+export default function Register() {
     return (
         <Div>
-            <h1>Página de Login</h1>
+            <h1>Página de cadastro</h1>
             <Link to="/">Go Home</Link>
         </Div>
     )
