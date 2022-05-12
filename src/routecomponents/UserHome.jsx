@@ -3,11 +3,11 @@ import { useContext } from "react";
 import axios from "axios";
 import styled from "styled-components";
 
-import UserContext from "./../contexts/UserContext.js";
+import UserContext from "../contexts/UserContext.js";
 import logoutButton from "./../assets/icon_logout.png";
 import cartIcon from "./../assets/icon_cart.png";
 
-export default function ShoppingList() {
+export default function UserHome() {
   const { userData, products, getProducts, shoppingCart, getShoppingCart } =
     useContext(UserContext);
   // Abaixo, soma preço total no carrinho (para usar em bonus)
@@ -39,8 +39,8 @@ export default function ShoppingList() {
   return (
     <Screen
       onLoad={() => {
-        // getProducts();
-        // getShoppingCart();
+        getProducts();
+        getShoppingCart();
       }}
     >
       <header>
