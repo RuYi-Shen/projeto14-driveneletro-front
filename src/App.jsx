@@ -22,7 +22,7 @@ export default function App() {
     const url = "https://projeto14-driveneletro.herokuapp.com/products";
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${userData.token}`,
       },
     };
     const promise = axios.get(url, config);
@@ -44,7 +44,7 @@ export default function App() {
     const url = "https://projeto14-driveneletro.herokuapp.com/shoppingcart";
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${userData.token}`,
       },
     };
     const promise = axios.get(url, config);
