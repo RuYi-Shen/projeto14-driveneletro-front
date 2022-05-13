@@ -30,7 +30,7 @@ export default function App() {
     promise.then((response) => {
       const { data } = response;
       setProducts(data);
-      console.log(data)
+      console.log(data);
     });
     promise.catch((err) => {
       const { response } = err;
@@ -53,7 +53,7 @@ export default function App() {
     promise.then((response) => {
       const { data } = response;
       setShoppingCart(data);
-      console.log(data)
+      console.log(data);
     });
     promise.catch((err) => {
       const { response } = err;
@@ -61,32 +61,6 @@ export default function App() {
       alert(data);
     });
   }
-
-  const buyProducts = () => {
-    // Função que faz o checkout do carrinho de compras
-    const url = "https://projeto14-driveneletro.herokuapp.com/sale";
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userData.token}`,
-      },
-    };
-    axios
-      .post(url, shoppingCart, config)
-      .then((response) => {
-        const { data } = response;
-        alert(data);
-
-        // Limpa o carrinho de compras
-        setShoppingCart([]);
-        getShoppingCart();
-      })
-      .catch((err) => {
-        const { response } = err;
-        const { data } = response;
-        console.log(data);
-        alert(data);
-      });
-  };
 
   return (
     <UserContext.Provider
@@ -99,7 +73,6 @@ export default function App() {
         shoppingCart,
         setShoppingCart,
         getShoppingCart,
-        buyProducts,
       }}
     >
       <BrowserRouter>

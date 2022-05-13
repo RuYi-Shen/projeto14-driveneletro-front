@@ -63,7 +63,7 @@ export default function ShoppingCart() {
     });
   }
 
-  function emptyCart(productId, product) {
+  function emptyCart() {
     setShoppingCart([]);
 
     const url = "https://projeto14-driveneletro.herokuapp.com/shoppingcart";
@@ -86,6 +86,7 @@ export default function ShoppingCart() {
   //  AQUI VC FAZ A FUNÇÃO DE ENVIAR A COMPRA FEITA
   function buyProducts() {
     // Função que faz o checkout do carrinho de compras
+    if(!window.confirm("Deseja finalizar a compra?")) return;
     const url = "https://projeto14-driveneletro.herokuapp.com/sale";
     const config = {
       headers: {
@@ -94,14 +95,13 @@ export default function ShoppingCart() {
     };
     console.log(shoppingCart);
     axios
-      .post(url, {boughtProducts: shoppingCart}, config)
+      .post(url, {date: new Date(), boughtProducts: shoppingCart}, config)
       .then((response) => {
         const { data } = response;
         alert(data);
 
         // Limpa o carrinho de compras
-        setShoppingCart([]);
-        getShoppingCart();
+        emptyCart();
         navigate("/userhome");
       })
       .catch((err) => {
