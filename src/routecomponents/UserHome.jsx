@@ -17,38 +17,42 @@ export default function UserHome() {
     getShoppingCart,
   } = useContext(UserContext);
 
+  const navigate = useNavigate();
   useEffect(() => {
-    getProducts();
-    getShoppingCart();
+    if (!userData.token) {
+      navigate("/");
+      return;
+    } else {
+      getProducts();
+      // getShoppingCart();
+    }
   }, []);
 
   // Abaixo, soma preço total no carrinho (para usar em bonus)
   // const sumall = shoppingCart.map(product => parseFloat(product.value)).reduce((prev, curr) => prev + curr, 0);
 
-  const navigate = useNavigate();
-
   //  Abaixo função de LogOut (para bônus)
 
   function signOut() {
-      const url = "https://projeto14-driveneletro.herokuapp.com/signout";
-      const config = {
-          headers: {
-              Authorization: `Bearer ${userData.token}`
-          }
-      };
-      const promise = axios.delete(url, config);
-      promise.then((response) => {
-          const { data } = response;
+    const url = "https://projeto14-driveneletro.herokuapp.com/signout";
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userData.token}`,
+      },
+    };
+    const promise = axios.delete(url, config);
+    promise.then((response) => {
+      const { data } = response;
 
-          localStorage.clear();
+      localStorage.clear();
 
-          navigate("/");
-      })
-      promise.catch((err) => {
-          const { response } = err;
-          const { data } = response;
-          alert(data);
-      })
+      navigate("/");
+    });
+    promise.catch((err) => {
+      const { response } = err;
+      const { data } = response;
+      alert(data);
+    });
   }
 
   function postShoppingCart(
