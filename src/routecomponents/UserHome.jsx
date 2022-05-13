@@ -1,5 +1,5 @@
 import { useNavigate, Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 
@@ -8,8 +8,20 @@ import logoutButton from "./../assets/icon_logout.png";
 import cartIcon from "./../assets/icon_cart.png";
 
 export default function UserHome() {
-  const { userData, products, getProducts, shoppingCart, getShoppingCart } =
-    useContext(UserContext);
+  const {
+    userData,
+    products,
+    getProducts,
+    shoppingCart,
+    setShoppingCart,
+    getShoppingCart,
+  } = useContext(UserContext);
+
+  useEffect(() => {
+    getProducts();
+    getShoppingCart();
+  }, []);
+
   // Abaixo, soma preço total no carrinho (para usar em bonus)
   // const sumall = shoppingCart.map(product => parseFloat(product.value)).reduce((prev, curr) => prev + curr, 0);
 
@@ -36,22 +48,102 @@ export default function UserHome() {
   //     })
   // }
 
+  function postShoppingCart(
+    productId,
+    product,
+    image,
+    description,
+    value,
+    type
+  ) {
+    let quantity = parseInt(
+      prompt(`Digite quantas unidades de ${product} você deseja comprar:`)
+    );
+    while (quantity <= 0 || typeof quantity !== "number" || quantity % 1 !== 0)
+      quantity = parseInt(prompt("Insira um valor válido:"));
+
+    let metaShoppingCart = [...shoppingCart];
+
+    const indexProductToEdit = shoppingCart.findIndex((product) => {
+      return product.productId === productId;
+    });
+
+    let metaProduct;
+    if (indexProductToEdit !== -1) {
+      metaProduct = { ...metaShoppingCart[indexProductToEdit] };
+      metaProduct.quantity = quantity;
+    } else {
+      metaProduct = {
+        productId,
+        product,
+        image,
+        description,
+        value,
+        type,
+        quantity,
+      };
+    }
+
+    if (indexProductToEdit === -1) {
+      metaShoppingCart.push(metaProduct);
+    } else {
+      metaShoppingCart.splice(indexProductToEdit, 1, metaProduct);
+    }
+
+    setShoppingCart(metaShoppingCart);
+
+    console.log("indexProductToEdit", indexProductToEdit);
+    console.log("metaProduct", metaProduct);
+    console.log("metaShoppingCart", metaShoppingCart);
+    console.log("shoppingCart", shoppingCart);
+
+    const url = "https://projeto14-driveneletro.herokuapp.com/shoppingcart";
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userData.token}`,
+      },
+    };
+    const promise = axios.post(url, metaShoppingCart, config);
+    promise.then((response) => {
+      getShoppingCart();
+    });
+    promise.catch((err) => {
+      const { response } = err;
+      const { data } = response;
+      alert(data);
+    });
+  }
+
   return (
-    <Screen
-      onLoad={() => {
-        getProducts();
-        getShoppingCart();
-      }}
-    >
+    <Screen>
       <header>
         <h1>Olá, {userData.name}</h1>
         <img src={logoutButton} alt="logoutButton" />
       </header>
       <article>
         {products.map((actualProduct, index) => {
-          const { product, image, description, value, type } = actualProduct;
+          const {
+            _id: productId,
+            product,
+            image,
+            description,
+            value,
+            type,
+          } = actualProduct;
           return (
-            <menu key={index}>
+            <menu
+              key={index}
+              onClick={() =>
+                postShoppingCart(
+                  productId,
+                  product,
+                  image,
+                  description,
+                  value,
+                  type
+                )
+              }
+            >
               <ProductImage src={image} alt={product} />
               <section>
                 <h1>{product}</h1>
