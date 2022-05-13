@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 
@@ -14,6 +14,9 @@ export default function ShoppingCart() {
   // const sumall = shoppingCart.map(product => parseFloat(product.value)).reduce((prev, curr) => prev + curr, 0);
 
   const navigate = useNavigate();
+  useEffect(() => {
+    if (!userData.token) navigate("/");
+  }, [])
 
   function editProductQuantity(productId, product) {
     let newQuantity = parseInt(
