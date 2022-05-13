@@ -7,6 +7,7 @@ import UserContext from "./contexts/UserContext.js";
 import Login from "./routecomponents/Login.jsx";
 import Register from "./routecomponents/Register.jsx";
 import UserHome from "./routecomponents/UserHome.jsx";
+import ShoppingCart from "./routecomponents/ShoppingCart.jsx";
 
 import NotFound from "./routecomponents/NotFound.jsx";
 
@@ -77,6 +78,7 @@ export default function App() {
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/userhome" element={<UserHome />} />
+          <Route path="/shoppingcart" element={<ShoppingCart />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

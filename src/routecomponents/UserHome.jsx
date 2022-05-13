@@ -8,8 +8,14 @@ import logoutButton from "./../assets/icon_logout.png";
 import cartIcon from "./../assets/icon_cart.png";
 
 export default function UserHome() {
-  const { userData, products, getProducts, shoppingCart, getShoppingCart } =
-    useContext(UserContext);
+  const {
+    userData,
+    products,
+    getProducts,
+    shoppingCart,
+    setShoppingCart,
+    getShoppingCart,
+  } = useContext(UserContext);
   // Abaixo, soma preço total no carrinho (para usar em bonus)
   // const sumall = shoppingCart.map(product => parseFloat(product.value)).reduce((prev, curr) => prev + curr, 0);
 
@@ -36,6 +42,42 @@ export default function UserHome() {
   //     })
   // }
 
+  function postShoppingCart(
+    productId,
+    product,
+    image,
+    description,
+    value,
+    type
+  ) {
+    let quantity = parseInt(
+      prompt(`Digite quantas unidades de ${product} você deseja comprar:`)
+    );
+    while (quantity <= 0 || typeof quantity !== "number" || quantity % 1 !== 0)
+      quantity = parseInt(prompt("Insira um valor válido:"));
+
+    setShoppingCart([
+      ...shoppingCart,
+      { productId, product, image, description, value, type, quantity },
+    ]);
+
+    const url = "https://projeto14-driveneletro.herokuapp.com/shoppingcart";
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userData.token}`,
+      },
+    };
+    const promise = axios.post(url, shoppingCart, config);
+    promise.then((response) => {
+      getShoppingCart();
+    });
+    promise.catch((err) => {
+      const { response } = err;
+      const { data } = response;
+      alert(data);
+    });
+  }
+
   return (
     <Screen
       onLoad={() => {
@@ -49,11 +91,29 @@ export default function UserHome() {
       </header>
       <article>
         {products.map((actualProduct, index) => {
-          const { product, image, description, value, type } = actualProduct;
+          const {
+            _id: productId,
+            product,
+            image,
+            description,
+            value,
+            type,
+          } = actualProduct;
           return (
             <menu key={index}>
               <ProductImage src={image} alt={product} />
-              <section>
+              <section
+                onClick={() =>
+                  postShoppingCart(
+                    productId,
+                    product,
+                    image,
+                    description,
+                    value,
+                    type
+                  )
+                }
+              >
                 <h1>{product}</h1>
                 <h2>{description}</h2>
                 <h1>R$ {parseFloat(value).toFixed(2).replace(".", ",")}</h1>
