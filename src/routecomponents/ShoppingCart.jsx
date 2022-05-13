@@ -28,17 +28,22 @@ export default function ShoppingCart() {
     )
       newQuantity = parseInt(prompt("Insira um valor válido:"));
 
+    let metaShoppingCart = [...shoppingCart];
+
     const indexProductToEdit = shoppingCart.findIndex((product) => {
       return product.productId === productId;
     });
-    let metaShoppingCart = [...shoppingCart];
+
     let metaProduct = { ...metaShoppingCart[indexProductToEdit] };
+
     metaProduct.quantity = newQuantity;
+
     if (metaProduct.quantity > 0) {
       metaShoppingCart.splice(indexProductToEdit, 1, metaProduct);
     } else {
-      metaShoppingCart.splice(indexProductToEdit, 1)
+      metaShoppingCart.splice(indexProductToEdit, 1);
     }
+
     setShoppingCart(metaShoppingCart);
 
     const url = "https://projeto14-driveneletro.herokuapp.com/shoppingcart";
@@ -47,7 +52,7 @@ export default function ShoppingCart() {
         Authorization: `Bearer ${userData.token}`,
       },
     };
-    const promise = axios.post(url, shoppingCart, config);
+    const promise = axios.post(url, metaShoppingCart, config);
     promise.then((response) => {
       getShoppingCart();
     });

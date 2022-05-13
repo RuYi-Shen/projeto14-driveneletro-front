@@ -30,6 +30,7 @@ export default function App() {
     promise.then((response) => {
       const { data } = response;
       setProducts(data);
+      console.log(data)
     });
     promise.catch((err) => {
       const { response } = err;
@@ -52,6 +53,7 @@ export default function App() {
     promise.then((response) => {
       const { data } = response;
       setShoppingCart(data);
+      console.log(data)
     });
     promise.catch((err) => {
       const { response } = err;
