@@ -72,7 +72,7 @@ export default function ShoppingCart() {
         Authorization: `Bearer ${userData.token}`,
       },
     };
-    const promise = axios.post(url, shoppingCart, config);
+    const promise = axios.post(url, [], config);
     promise.then((response) => {
       getShoppingCart();
     });
