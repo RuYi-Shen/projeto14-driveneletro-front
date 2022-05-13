@@ -17,15 +17,15 @@ export default function Login() {
     const { setUserData } = useContext(UserContext);
 
     useEffect(() => {
-        /* if (localStorage.getItem('userData') !== null) {
+        if (localStorage.getItem('userData') !== null) {
             setUserData(JSON.parse(localStorage.getItem('userData')));
-            navigate("/history");
-        } */
+            navigate("/userhome");
+        } 
         if (Object.keys(userInfo).length !== 0) {
             setDisabled(true);
             axios.post(URL, userInfo)
                 .then((response) => {
-                    //localStorage.setItem('userData', JSON.stringify(response.data));
+                    localStorage.setItem('userData', JSON.stringify(response.data));
                     setUserData(response.data);
                     navigate("/userhome");
                 })

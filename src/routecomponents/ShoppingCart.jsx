@@ -95,7 +95,7 @@ export default function ShoppingCart() {
     };
     console.log(shoppingCart);
     axios
-      .post(url, {boughtProducts: shoppingCart}, config)
+      .post(url, {date: new Date(), boughtProducts: shoppingCart}, config)
       .then((response) => {
         const { data } = response;
         alert(data);
@@ -144,6 +144,9 @@ export default function ShoppingCart() {
         })}
       </article>
       <ButtonContainer>
+        <ShoppingCartButton onClick={()=>navigate("/userhome")}>
+          Voltar
+        </ShoppingCartButton>
         <ShoppingCartButton onClick={buyProducts}>
           Confirmar compras
         </ShoppingCartButton>

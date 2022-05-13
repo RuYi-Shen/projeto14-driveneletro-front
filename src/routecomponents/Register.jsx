@@ -13,7 +13,7 @@ export default function Register() {
     const [disabled, setDisabled] = useState(false);
 
     useEffect(() => {
-        //localStorage.clear();
+        localStorage.clear();
         if (Object.keys(userInfo).length !== 0) {
             setDisabled(true);
             axios.post(URL, userInfo)
