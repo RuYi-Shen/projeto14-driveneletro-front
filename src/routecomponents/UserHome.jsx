@@ -1,5 +1,5 @@
 import { useNavigate, Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 
@@ -16,6 +16,12 @@ export default function UserHome() {
     setShoppingCart,
     getShoppingCart,
   } = useContext(UserContext);
+
+  useEffect(() => {
+    getProducts();
+    getShoppingCart();
+  }, []);
+
   // Abaixo, soma preço total no carrinho (para usar em bonus)
   // const sumall = shoppingCart.map(product => parseFloat(product.value)).reduce((prev, curr) => prev + curr, 0);
 
@@ -56,10 +62,40 @@ export default function UserHome() {
     while (quantity <= 0 || typeof quantity !== "number" || quantity % 1 !== 0)
       quantity = parseInt(prompt("Insira um valor válido:"));
 
-    setShoppingCart([
-      ...shoppingCart,
-      { productId, product, image, description, value, type, quantity },
-    ]);
+    let metaShoppingCart = [...shoppingCart];
+
+    const indexProductToEdit = shoppingCart.findIndex((product) => {
+      return product.productId === productId;
+    });
+
+    let metaProduct;
+    if (indexProductToEdit !== -1) {
+      metaProduct = { ...metaShoppingCart[indexProductToEdit] };
+      metaProduct.quantity = quantity;
+    } else {
+      metaProduct = {
+        productId,
+        product,
+        image,
+        description,
+        value,
+        type,
+        quantity,
+      };
+    }
+
+    if (indexProductToEdit === -1) {
+      metaShoppingCart.push(metaProduct);
+    } else {
+      metaShoppingCart.splice(indexProductToEdit, 1, metaProduct);
+    }
+
+    setShoppingCart(metaShoppingCart);
+
+    console.log("indexProductToEdit", indexProductToEdit);
+    console.log("metaProduct", metaProduct);
+    console.log("metaShoppingCart", metaShoppingCart);
+    console.log("shoppingCart", shoppingCart);
 
     const url = "https://projeto14-driveneletro.herokuapp.com/shoppingcart";
     const config = {
@@ -67,7 +103,7 @@ export default function UserHome() {
         Authorization: `Bearer ${userData.token}`,
       },
     };
-    const promise = axios.post(url, shoppingCart, config);
+    const promise = axios.post(url, metaShoppingCart, config);
     promise.then((response) => {
       getShoppingCart();
     });
@@ -79,12 +115,7 @@ export default function UserHome() {
   }
 
   return (
-    <Screen
-      onLoad={() => {
-        getProducts();
-        getShoppingCart();
-      }}
-    >
+    <Screen>
       <header>
         <h1>Olá, {userData.name}</h1>
         <img src={logoutButton} alt="logoutButton" />
@@ -100,20 +131,21 @@ export default function UserHome() {
             type,
           } = actualProduct;
           return (
-            <menu key={index}>
+            <menu
+              key={index}
+              onClick={() =>
+                postShoppingCart(
+                  productId,
+                  product,
+                  image,
+                  description,
+                  value,
+                  type
+                )
+              }
+            >
               <ProductImage src={image} alt={product} />
-              <section
-                onClick={() =>
-                  postShoppingCart(
-                    productId,
-                    product,
-                    image,
-                    description,
-                    value,
-                    type
-                  )
-                }
-              >
+              <section>
                 <h1>{product}</h1>
                 <h2>{description}</h2>
                 <h1>R$ {parseFloat(value).toFixed(2).replace(".", ",")}</h1>
