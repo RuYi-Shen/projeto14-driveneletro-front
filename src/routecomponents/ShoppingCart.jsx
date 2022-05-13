@@ -84,6 +84,33 @@ export default function ShoppingCart() {
   }
 
   //  AQUI VC FAZ A FUNÇÃO DE ENVIAR A COMPRA FEITA
+  function buyProducts() {
+    // Função que faz o checkout do carrinho de compras
+    const url = "https://projeto14-driveneletro.herokuapp.com/sale";
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userData.token}`,
+      },
+    };
+    console.log(shoppingCart);
+    axios
+      .post(url, {boughtProducts: shoppingCart}, config)
+      .then((response) => {
+        const { data } = response;
+        alert(data);
+
+        // Limpa o carrinho de compras
+        setShoppingCart([]);
+        getShoppingCart();
+        navigate("/userhome");
+      })
+      .catch((err) => {
+        const { response } = err;
+        const { data } = response;
+        console.log(data);
+        alert(data);
+      });
+  };
 
   return (
     <Screen>
@@ -117,7 +144,9 @@ export default function ShoppingCart() {
         })}
       </article>
       <ButtonContainer>
-        <ShoppingCartButton>Confirmar compras</ShoppingCartButton>
+        <ShoppingCartButton onClick={buyProducts}>
+          Confirmar compras
+        </ShoppingCartButton>
         <ShoppingCartButton onClick={emptyCart}>
           Limpar o carrinho
         </ShoppingCartButton>
