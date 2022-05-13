@@ -144,6 +144,9 @@ export default function ShoppingCart() {
         })}
       </article>
       <ButtonContainer>
+        <ShoppingCartButton onClick={()=>navigate("/userhome")}>
+          Voltar
+        </ShoppingCartButton>
         <ShoppingCartButton onClick={buyProducts}>
           Confirmar compras
         </ShoppingCartButton>
