@@ -29,24 +29,24 @@ export default function UserHome() {
 
   //  Abaixo função de LogOut (para bônus)
 
-  // function signOut() {
-  //     const url = "https://projeto14-driveneletro.herokuapp.com/signout";
-  //     const config = {
-  //         headers: {
-  //             Authorization: `Bearer ${userData.token}`
-  //         }
-  //     };
-  //     const promise = axios.delete(url, config);
-  //     promise.then((response) => {
-  //         const { data } = response;
-  //         navigate("/");
-  //     })
-  //     promise.catch((err) => {
-  //         const { response } = err;
-  //         const { data } = response;
-  //         alert(data);
-  //     })
-  // }
+  function signOut() {
+      const url = "https://projeto14-driveneletro.herokuapp.com/signout";
+      const config = {
+          headers: {
+              Authorization: `Bearer ${userData.token}`
+          }
+      };
+      const promise = axios.delete(url, config);
+      promise.then((response) => {
+          const { data } = response;
+          navigate("/");
+      })
+      promise.catch((err) => {
+          const { response } = err;
+          const { data } = response;
+          alert(data);
+      })
+  }
 
   function postShoppingCart(
     productId,
@@ -118,7 +118,7 @@ export default function UserHome() {
     <Screen>
       <header>
         <h1>Olá, {userData.name}</h1>
-        <img src={logoutButton} alt="logoutButton" />
+        <img src={logoutButton} onClick={signOut} alt="logoutButton" />
       </header>
       <article>
         {products.map((actualProduct, index) => {
