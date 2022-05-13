@@ -63,7 +63,7 @@ export default function ShoppingCart() {
     });
   }
 
-  function emptyCart(productId, product) {
+  function emptyCart() {
     setShoppingCart([]);
 
     const url = "https://projeto14-driveneletro.herokuapp.com/shoppingcart";
@@ -101,8 +101,7 @@ export default function ShoppingCart() {
         alert(data);
 
         // Limpa o carrinho de compras
-        setShoppingCart([]);
-        getShoppingCart();
+        emptyCart();
         navigate("/userhome");
       })
       .catch((err) => {
