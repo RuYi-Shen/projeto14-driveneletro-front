@@ -60,6 +60,32 @@ export default function App() {
     });
   }
 
+  const buyProducts = () => {
+    // Função que faz o checkout do carrinho de compras
+    const url = "https://projeto14-driveneletro.herokuapp.com/sale";
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userData.token}`,
+      },
+    };
+    axios
+      .post(url, shoppingCart, config)
+      .then((response) => {
+        const { data } = response;
+        alert(data);
+
+        // Limpa o carrinho de compras
+        setShoppingCart([]);
+        getShoppingCart();
+      })
+      .catch((err) => {
+        const { response } = err;
+        const { data } = response;
+        console.log(data);
+        alert(data);
+      });
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -71,6 +97,7 @@ export default function App() {
         shoppingCart,
         setShoppingCart,
         getShoppingCart,
+        buyProducts,
       }}
     >
       <BrowserRouter>
