@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import Form from '../components/Form';
 import axios from 'axios';
 
+import logo from '../assets/de_logo.png';
+
 export default function Register() {
     const URL = "https://projeto14-driveneletro.herokuapp.com/signup";
 
@@ -31,9 +33,12 @@ export default function Register() {
 
     return (
         <Main>
-            <h1>DrivenEletro</h1>
-            <Form type="register" setUserInfo={setUserInfo} disabled={disabled} />
-            <Link to="/">Já tem uma conta? Entre agora!</Link>
+            <section>
+                <img src={logo} alt="logo" />
+                <h1><span>Driven</span>Eletro</h1>
+                <Form type="register" setUserInfo={setUserInfo} disabled={disabled} />
+                <Link to="/">Já tem uma conta? Entre agora!</Link>
+            </section>
         </Main>
     )
 }
@@ -49,26 +54,44 @@ const Main = styled.main`
     text-align: center;
     align-items: center;
     justify-content: center;
-    padding: 0 24px;
+    padding: 48px 5%;
     background-color: var(--purple-base);
 
-    h1 {
-        //font-family: 'Saira Stencil One';
-        font-weight: 700;
-        font-size: 32px;
+    section {
+        width: 100%;
+        max-width: 530px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        padding: 0 20px;
+        background-color: var(--white-base);
+        border-radius: 18px;
 
-        color: var(--white-base);
-    }
+        h1 {
+            //font-family: 'Saira Stencil One';
+            font-weight: 700;
+            font-size: 32px;
+            margin-top: 10px;
 
-    form {
-        max-width: 430px;
-        margin: 32px 24px;
-    }
+            color: var(--blue-base);
+            span {
+                color: var(--blue-button);
+            }
+        }
 
-    a {
-        font-weight: 700;
-        font-size: 15px;
+        form {
+            max-width: 430px;
+            margin: 32px 24px;
+        }
 
-        color: var(--white-base);
+        a {
+            font-weight: 700;
+            font-size: 15px;
+
+            color: var(--blue-base);
+        }
     }
 `
