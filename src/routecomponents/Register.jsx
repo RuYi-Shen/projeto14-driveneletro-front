@@ -37,7 +37,7 @@ export default function Register() {
                 <img src={logo} alt="logo" />
                 <h1><span>Driven</span>Eletro</h1>
                 <Form type="register" setUserInfo={setUserInfo} disabled={disabled} />
-                <Link to="/">Já tem uma conta? Entre agora!</Link>
+                <Link to="/">Já tem uma conta? <u>Entre agora!</u></Link>
             </section>
         </Main>
     )
@@ -56,6 +56,7 @@ const Main = styled.main`
     justify-content: center;
     padding: 48px 5%;
     background-color: var(--purple-base);
+    background-image: url(https://i.imgur.com/EbMZ1ET.jpg);
 
     section {
         width: 100%;
@@ -69,6 +70,7 @@ const Main = styled.main`
         padding: 0 20px;
         background-color: var(--white-base);
         border-radius: 18px;
+        box-shadow: 5px 5px 10px rgba(0, 0, 10, 0.4);
 
         h1 {
             //font-family: 'Saira Stencil One';
