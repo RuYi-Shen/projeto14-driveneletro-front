@@ -54,7 +54,7 @@ const Forms = styled.form`
             height: 50px;
             box-sizing: border-box;
             border-radius: 25px;
-            border: 1px solid rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 0, 0, 0.2);
             padding: 0 15px;
             margin-bottom: 13px;
             background-color: ${(props => props.disabled ? 'var(--white-base)' : 'var(--white-base)')};
@@ -62,6 +62,13 @@ const Forms = styled.form`
             
             font-size: 20px;
             line-height: 23px;
+            box-shadow: 5px 5px 5px rgba(0, 0, 10, 0.3);
+            
+            &:focus {
+                outline: 4px solid var(--blue-button);
+                border: none;
+                background-color: var(--blue-light);
+            }
         }
 
         button {
@@ -78,9 +85,15 @@ const Forms = styled.form`
             line-height: 23px;
 
             color: var(--white-base);
+            box-shadow: 5px 5px 10px rgba(0, 0, 10, 0.4);
 
             &:hover {
                 cursor: pointer;
+            }
+
+            &:focus {
+                outline: 4px solid var(--blue-button);
+                border: none;
             }
         }
     }
