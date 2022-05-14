@@ -1,5 +1,5 @@
 import { useNavigate, Link } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 
@@ -11,6 +11,7 @@ export default function UserHome() {
   const {
     userData,
     products,
+    setProducts,
     getProducts,
     shoppingCart,
     setShoppingCart,
@@ -121,14 +122,52 @@ export default function UserHome() {
     });
   }
 
+  const [type, setType] = useState("Todos");
+  const [displayProducts, setDisplayProducts] = useState([]);
+
+
+  function handleChange(event) {
+    setType(event.target.value);
+  }
+
+  useEffect(() => {
+    switch (type) {
+      case "Todos":
+        setDisplayProducts(products);
+        return;
+      case "PC":
+        setDisplayProducts([...products].filter((product) => product.type === "PC"));
+        return;
+      case "Celular":
+        setDisplayProducts([...products].filter((product) => product.type === "Celular"));
+        return;
+      case "Periférico":
+        setDisplayProducts([...products].filter((product) => product.type === "Periférico"));
+        return;
+      case "Video_Game":
+        setDisplayProducts([...products].filter((product) => product.type === "Video_Game"));
+        return;
+      default:
+        setDisplayProducts(products);
+        return;
+    }
+  }, [type]);
+
   return (
     <Screen>
       <header>
         <h1>Olá, {userData.name}</h1>
+        <select value={type} onChange={handleChange} placeholder="Todos">
+          <option value="Todos">Todos</option>
+          <option value="PC">Computadores</option>
+          <option value="Celular">Celulares</option>
+          <option value="Periférico">Periféricos</option>
+          <option value="Video_Game">Vídeo Games</option>
+        </select>
         <img src={logoutButton} onClick={signOut} alt="logoutButton" />
       </header>
       <article>
-        {products.map((actualProduct, index) => {
+        {displayProducts.map((actualProduct, index) => {
           const {
             _id: productId,
             product,
