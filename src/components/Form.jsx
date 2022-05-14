@@ -51,10 +51,10 @@ const Forms = styled.form`
 
         input {
             width: 100%;
-            height: 58px;
+            height: 50px;
             box-sizing: border-box;
-            border-radius: 5px;
-            border: none;
+            border-radius: 25px;
+            border: 1px solid rgba(0, 0, 0, 0.3);
             padding: 0 15px;
             margin-bottom: 13px;
             background-color: ${(props => props.disabled ? 'var(--white-base)' : 'var(--white-base)')};
@@ -69,7 +69,7 @@ const Forms = styled.form`
             height: 46px;
             border: none;
             background-color: var(--blue-button);
-            border-radius: 5px;
+            border-radius: 25px;
             display: flex;
             justify-content: center;
             align-items: center;
