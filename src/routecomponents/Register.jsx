@@ -58,6 +58,22 @@ const Main = styled.main`
     background-color: var(--purple-base);
     background-image: url(https://i.imgur.com/EbMZ1ET.jpg);
 
+    @media (max-height: 700px) {
+        img {
+            height: 17vh;
+            width: auto;
+        }
+        section > h1 {
+            font-size: 4vh!important;
+            margin-top: 0!important;
+            margin-bottom: -20px;
+        }
+        a { 
+            font-size: 2.2vh!important;
+            margin-top: -20px;
+        }
+    }
+
     section {
         width: 100%;
         max-width: 530px;
