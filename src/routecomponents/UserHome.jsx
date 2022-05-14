@@ -133,31 +133,19 @@ export default function UserHome() {
   useEffect(() => {
     switch (type) {
       case "Todos":
-        setDisplayProducts(products);
-        return;
-      case "PC":
-        setDisplayProducts([...products].filter((product) => product.type === "PC"));
-        return;
-      case "Celular":
-        setDisplayProducts([...products].filter((product) => product.type === "Celular"));
-        return;
-      case "Periférico":
-        setDisplayProducts([...products].filter((product) => product.type === "Periférico"));
-        return;
-      case "Video_Game":
-        setDisplayProducts([...products].filter((product) => product.type === "Video_Game"));
+        setDisplayProducts([...products]);
         return;
       default:
-        setDisplayProducts(products);
+        setDisplayProducts([...products].filter((product) => product.type === type));
         return;
     }
-  }, [type]);
+  }, [type,products]);
 
   return (
     <Screen>
       <header>
         <h1>Olá, {userData.name}</h1>
-        <select value={type} onChange={handleChange} placeholder="Todos">
+        <select value={type} onChange={handleChange}>
           <option value="Todos">Todos</option>
           <option value="PC">Computadores</option>
           <option value="Celular">Celulares</option>
