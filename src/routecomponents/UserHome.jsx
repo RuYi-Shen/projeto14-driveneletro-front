@@ -62,14 +62,23 @@ export default function UserHome() {
     value,
     type
   ) {
-    let input = parseInt(
-      prompt(`Digite quantas unidades de ${product} você deseja comprar:`)
+    let input = prompt(
+      `Digite quantas unidades de ${product} você deseja comprar:`
     );
-    while (typeof input !== "number" || input <= 0 || input % 1 !== 0) {
+    if (input === null) return;
+
+    let quantity = parseInt(input);
+
+    while (
+      typeof quantity !== "number" ||
+      quantity <= 0 ||
+      quantity % 1 !== 0
+    ) {
       if (input === null) return;
-      input = parseInt(prompt("Insira um valor válido:"));
+
+      input = prompt("Insira um valor válido:");
+      quantity = parseInt(input);
     }
-    let quantity = input;
 
     let metaShoppingCart = [...shoppingCart];
 
