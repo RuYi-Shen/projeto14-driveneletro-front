@@ -8,18 +8,16 @@ import Login from "./routecomponents/Login.jsx";
 import Register from "./routecomponents/Register.jsx";
 import UserHome from "./routecomponents/UserHome.jsx";
 import ShoppingCart from "./routecomponents/ShoppingCart.jsx";
-
 import NotFound from "./routecomponents/NotFound.jsx";
 
 import "./css/reset.css";
 import "./css/style.css";
 
 export default function App() {
-  const [userData, setUserData] = useState({}); // aqui é { name, token } ?
-  const [products, setProducts] = useState([]); // Aqui fica a lista de produtos
+  const [userData, setUserData] = useState({});
+  const [products, setProducts] = useState([]);
 
   function getProducts() {
-    // Função que resgata lista de produtos e a armazena
     const url = "https://projeto14-driveneletro.herokuapp.com/products";
     const config = {
       headers: {
@@ -30,7 +28,6 @@ export default function App() {
     promise.then((response) => {
       const { data } = response;
       setProducts(data);
-      console.log(data);
     });
     promise.catch((err) => {
       const { response } = err;
@@ -39,10 +36,9 @@ export default function App() {
     });
   }
 
-  const [shoppingCart, setShoppingCart] = useState([]); // Aqui fica a lista do carrinho de compras
+  const [shoppingCart, setShoppingCart] = useState([]);
 
   function getShoppingCart() {
-    // Função que resgata lista do carrinho de compras e a armazena
     const url = "https://projeto14-driveneletro.herokuapp.com/shoppingcart";
     const config = {
       headers: {
@@ -53,7 +49,6 @@ export default function App() {
     promise.then((response) => {
       const { data } = response;
       setShoppingCart(data);
-      console.log(data);
     });
     promise.catch((err) => {
       const { response } = err;

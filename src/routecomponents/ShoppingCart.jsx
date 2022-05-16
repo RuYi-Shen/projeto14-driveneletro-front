@@ -1,22 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
-import axios from "axios";
 import styled from "styled-components";
+import axios from "axios";
 
 import UserContext from "../contexts/UserContext.js";
+
 import goBackIcon from "./../assets/icon_back.png";
 import editIcon from "./../assets/icon_edit.png";
 
 export default function ShoppingCart() {
   const { userData, shoppingCart, setShoppingCart, getShoppingCart } =
     useContext(UserContext);
-  // Abaixo, soma preço total no carrinho (para usar em bonus)
-  // const sumall = shoppingCart.map(product => parseFloat(product.value)).reduce((prev, curr) => prev + curr, 0);
 
   const navigate = useNavigate();
   useEffect(() => {
     if (!userData.token) navigate("/");
-  }, [])
+  }, []);
 
   function editProductQuantity(productId, product) {
     let newQuantity = parseInt(
@@ -67,7 +66,7 @@ export default function ShoppingCart() {
   }
 
   function emptyCart() {
-    if(!window.confirm("Deseja esvaziar o carrinho?")) return;
+    if (!window.confirm("Deseja esvaziar o carrinho?")) return;
     setShoppingCart([]);
 
     const url = "https://projeto14-driveneletro.herokuapp.com/shoppingcart";
@@ -87,34 +86,28 @@ export default function ShoppingCart() {
     });
   }
 
-  //  AQUI VC FAZ A FUNÇÃO DE ENVIAR A COMPRA FEITA
   function buyProducts() {
-    // Função que faz o checkout do carrinho de compras
-    if(!window.confirm("Deseja finalizar a compra?")) return;
+    if (!window.confirm("Deseja finalizar a compra?")) return;
     const url = "https://projeto14-driveneletro.herokuapp.com/sale";
     const config = {
       headers: {
         Authorization: `Bearer ${userData.token}`,
       },
     };
-    console.log(shoppingCart);
     axios
-      .post(url, {date: new Date(), boughtProducts: shoppingCart}, config)
+      .post(url, { date: new Date(), boughtProducts: shoppingCart }, config)
       .then((response) => {
         const { data } = response;
         alert(data);
-
-        // Limpa o carrinho de compras
         emptyCart();
         navigate("/userhome");
       })
       .catch((err) => {
         const { response } = err;
         const { data } = response;
-        console.log(data);
         alert(data);
       });
-  };
+  }
 
   return (
     <Screen>
@@ -148,9 +141,6 @@ export default function ShoppingCart() {
         })}
       </article>
       <ButtonContainer>
-        {/* <ShoppingCartButton onClick={()=>navigate("/userhome")}>
-          Voltar
-        </ShoppingCartButton> */}
         <ShoppingCartButton className="confirm" onClick={buyProducts}>
           Confirmar compras
         </ShoppingCartButton>
@@ -191,8 +181,6 @@ const Screen = styled.section`
     box-shadow: 0 0 5px rgba(255, 255, 255, 0.9);
     menu {
       display: flex;
-      /* justify-content: space-between; */
-      /* align-items: center; */
       margin-bottom: 20px;
       padding: 10px;
       position: relative;
@@ -205,10 +193,7 @@ const Screen = styled.section`
         justify-content: space-between;
         width: 160px;
         margin-right: 30px;
-        /* min-height: 90px; */
-        /* max-width: 160px; */
         h1 {
-          /* margin-right: 10px; */
           font-size: 16px;
           font-weight: 700;
           color: #ffffff;
@@ -230,13 +215,11 @@ const ButtonContainer = styled.div`
 const ShoppingCartButton = styled.button`
   width: 48%;
   height: 46px;
-  //background: #478ea5;
   border-radius: 5px;
   border: none;
   font-weight: 700;
   font-size: 18px;
   color: #ffffff;
-  //box-shadow: 2px 2px 5px rgba(255, 255, 255, 0.5);
 
   &.confirm {
     background: #3bcb3be0;
