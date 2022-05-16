@@ -6,6 +6,7 @@ import styled from "styled-components";
 import UserContext from "../contexts/UserContext.js";
 import logoutButton from "./../assets/icon_logout.png";
 import cartIcon from "./../assets/icon_cart.png";
+import logo from "./../assets/de_logo.png";
 
 export default function UserHome() {
   const {
@@ -35,6 +36,7 @@ export default function UserHome() {
   //  Abaixo função de LogOut (para bônus)
 
   function signOut() {
+    if (!window.confirm("Deseja realmente sair?")) return;
     const url = "https://projeto14-driveneletro.herokuapp.com/signout";
     const config = {
       headers: {
@@ -64,11 +66,13 @@ export default function UserHome() {
     value,
     type
   ) {
-    let quantity = parseInt(
-      prompt(`Digite quantas unidades de ${product} você deseja comprar:`)
-    );
-    while (quantity <= 0 || typeof quantity !== "number" || quantity % 1 !== 0)
-      quantity = parseInt(prompt("Insira um valor válido:"));
+    let input = prompt(`Digite quantas unidades de ${product} você deseja comprar:`);
+    while ( typeof input !== "number" || input <= 0 || input % 1 !== 0){
+      if (input === null) return;
+      input = prompt("Insira um valor válido:");
+    }
+    let quantity = parseInt(input);
+      
 
     let metaShoppingCart = [...shoppingCart];
 
@@ -139,19 +143,22 @@ export default function UserHome() {
         setDisplayProducts([...products].filter((product) => product.type === type));
         return;
     }
-  }, [type,products]);
+  }, [type, products]);
 
   return (
     <Screen>
       <header>
+        <img src={logo} alt="logo" />
         <h1>Olá, {userData.name}</h1>
-        <select value={type} onChange={handleChange}>
-          <option value="Todos">Todos</option>
-          <option value="PC">Computadores</option>
-          <option value="Celular">Celulares</option>
-          <option value="Periférico">Periféricos</option>
-          <option value="Video_Game">Vídeo Games</option>
-        </select>
+        <div>
+          <select value={type} onChange={handleChange}>
+            <option value="Todos">Todas Categorias</option>
+            <option value="PC">Computadores</option>
+            <option value="Celular">Celulares</option>
+            <option value="Periférico">Periféricos</option>
+            <option value="Video_Game">Vídeo Games</option>
+          </select>
+        </div>
         <img src={logoutButton} onClick={signOut} alt="logoutButton" />
       </header>
       <article>
@@ -212,6 +219,7 @@ const Screen = styled.section`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-bottom: 25px;
     h1 {
       font-weight: 700;
       font-size: 26px;
@@ -220,18 +228,40 @@ const Screen = styled.section`
     img {
       height: 24px;
     }
+    div {
+      position: absolute;
+      left: 0;
+      top: 65px;
+      width: 100%;
+      background-color: var(--blue-button);
+      padding: 0 25px;
+
+      select {
+        max-width: 200px;
+        height: 25px;
+        //border: 1px solid #ffffff;
+        //border-radius: 5px;
+        background-color: var(--blue-button);
+        color: var(--white-base);
+        
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
   }
   article {
     margin-top: 25px;
-    margin-bottom: 13px;
+    margin-bottom: 25px;
     background-color: #e5e5e5;
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 170px);
+    height: calc(100vh - 197px);
     border-radius: 5px;
     overflow-y: scroll;
     position: relative;
     padding: 23px 12px 10px 12px;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.9);
     menu {
       display: flex;
       /* justify-content: space-between; */
@@ -240,6 +270,7 @@ const Screen = styled.section`
       position: relative;
       background-color: #478ea5;
       border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
       section {
         display: flex;
         flex-direction: column;
@@ -271,7 +302,7 @@ const DisabledShoppingCartButton = styled.button`
   border: none;
   /* margin-bottom: 36px; */
   font-weight: 700;
-  font-size: 20px;
+  font-size: 19px;
   color: #ffffff;
 `;
 
@@ -283,8 +314,9 @@ const EnabledShoppingCartButton = styled.button`
   border: none;
   /* margin-bottom: 36px; */
   font-weight: 700;
-  font-size: 20px;
+  font-size: 19px;
   color: #ffffff;
+  //ox-shadow: 2px 2px 5px rgba(255, 255, 255, 0.5);
 `;
 
 const ProductImage = styled.img`
