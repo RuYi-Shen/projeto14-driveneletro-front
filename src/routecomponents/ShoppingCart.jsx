@@ -18,19 +18,22 @@ export default function ShoppingCart() {
   }, []);
 
   function editProductQuantity(productId, product) {
-    let newQuantity = parseInt(
-      prompt(
-        `Digite quantas unidades de ${product} você deseja ter no carrinho:`
-      )
+    let input = prompt(
+      `Digite quantas unidades de ${product} você deseja ter no carrinho:`
     );
+    if (input === null) return;
+
+    let newQuantity = parseInt(input);
+
     while (
-      newQuantity < 0 ||
       typeof newQuantity !== "number" ||
+      newQuantity < 0 ||
       newQuantity % 1 !== 0
     ) {
-      if (newQuantity === null) return;
+      if (input === null) return;
 
-      newQuantity = parseInt(prompt("Insira um valor válido:"));
+      input = prompt("Insira um valor válido:");
+      newQuantity = parseInt(input);
     }
 
     let metaShoppingCart = [...shoppingCart];
