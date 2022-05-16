@@ -67,7 +67,7 @@ export default function UserHome() {
     );
     while (typeof input !== "number" || input <= 0 || input % 1 !== 0) {
       if (input === null) return;
-      input = prompt("Insira um valor válido:");
+      input = parseInt(prompt("Insira um valor válido:"));
     }
     let quantity = input;
 
