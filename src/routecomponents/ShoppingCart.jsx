@@ -105,7 +105,7 @@ export default function ShoppingCart() {
       .then((response) => {
         const { data } = response;
         alert(data);
-        emptyCart();
+        setShoppingCart([]);
         navigate("/userhome");
       })
       .catch((err) => {
