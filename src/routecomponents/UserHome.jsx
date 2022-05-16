@@ -13,7 +13,6 @@ export default function UserHome() {
   const {
     userData,
     products,
-    setProducts,
     getProducts,
     shoppingCart,
     setShoppingCart,
@@ -41,10 +40,7 @@ export default function UserHome() {
     };
     const promise = axios.delete(url, config);
     promise.then((response) => {
-      const { data } = response;
-
       localStorage.clear();
-
       navigate("/");
     });
     promise.catch((err) => {
