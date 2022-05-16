@@ -1,9 +1,10 @@
 import { useNavigate, Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import axios from "axios";
 import styled from "styled-components";
+import axios from "axios";
 
 import UserContext from "../contexts/UserContext.js";
+
 import logoutButton from "./../assets/icon_logout.png";
 import cartIcon from "./../assets/icon_cart.png";
 import logo from "./../assets/de_logo.png";
@@ -29,11 +30,6 @@ export default function UserHome() {
       getShoppingCart();
     }
   }, []);
-
-  // Abaixo, soma preço total no carrinho (para usar em bonus)
-  // const sumall = shoppingCart.map(product => parseFloat(product.value)).reduce((prev, curr) => prev + curr, 0);
-
-  //  Abaixo função de LogOut (para bônus)
 
   function signOut() {
     if (!window.confirm("Deseja realmente sair?")) return;
@@ -66,13 +62,14 @@ export default function UserHome() {
     value,
     type
   ) {
-    let input = prompt(`Digite quantas unidades de ${product} você deseja comprar:`);
-    while ( typeof input !== "number" || input <= 0 || input % 1 !== 0){
+    let input = prompt(
+      `Digite quantas unidades de ${product} você deseja comprar:`
+    );
+    while (typeof input !== "number" || input <= 0 || input % 1 !== 0) {
       if (input === null) return;
       input = prompt("Insira um valor válido:");
     }
     let quantity = parseInt(input);
-      
 
     let metaShoppingCart = [...shoppingCart];
 
@@ -104,11 +101,6 @@ export default function UserHome() {
 
     setShoppingCart(metaShoppingCart);
 
-    console.log("indexProductToEdit", indexProductToEdit);
-    console.log("metaProduct", metaProduct);
-    console.log("metaShoppingCart", metaShoppingCart);
-    console.log("shoppingCart", shoppingCart);
-
     const url = "https://projeto14-driveneletro.herokuapp.com/shoppingcart";
     const config = {
       headers: {
@@ -129,7 +121,6 @@ export default function UserHome() {
   const [type, setType] = useState("Todos");
   const [displayProducts, setDisplayProducts] = useState([]);
 
-
   function handleChange(event) {
     setType(event.target.value);
   }
@@ -140,7 +131,9 @@ export default function UserHome() {
         setDisplayProducts([...products]);
         return;
       default:
-        setDisplayProducts([...products].filter((product) => product.type === type));
+        setDisplayProducts(
+          [...products].filter((product) => product.type === type)
+        );
         return;
     }
   }, [type, products]);
@@ -239,11 +232,9 @@ const Screen = styled.section`
       select {
         max-width: 200px;
         height: 25px;
-        //border: 1px solid #ffffff;
-        //border-radius: 5px;
         background-color: var(--blue-button);
         color: var(--white-base);
-        
+
         &:hover {
           cursor: pointer;
         }
@@ -264,7 +255,6 @@ const Screen = styled.section`
     box-shadow: 0 0 5px rgba(255, 255, 255, 0.9);
     menu {
       display: flex;
-      /* justify-content: space-between; */
       margin-bottom: 20px;
       padding: 10px;
       position: relative;
@@ -277,10 +267,7 @@ const Screen = styled.section`
         justify-content: space-between;
         width: 160px;
         margin-right: 30px;
-        /* min-height: 90px; */
-        /* max-width: 160px; */
         h1 {
-          /* margin-right: 10px; */
           font-size: 16px;
           font-weight: 700;
           color: #ffffff;
@@ -300,7 +287,6 @@ const DisabledShoppingCartButton = styled.button`
   background: #696969;
   border-radius: 5px;
   border: none;
-  /* margin-bottom: 36px; */
   font-weight: 700;
   font-size: 19px;
   color: #ffffff;
@@ -312,11 +298,9 @@ const EnabledShoppingCartButton = styled.button`
   background: #478ea5;
   border-radius: 5px;
   border: none;
-  /* margin-bottom: 36px; */
   font-weight: 700;
   font-size: 19px;
   color: #ffffff;
-  //ox-shadow: 2px 2px 5px rgba(255, 255, 255, 0.5);
 `;
 
 const ProductImage = styled.img`

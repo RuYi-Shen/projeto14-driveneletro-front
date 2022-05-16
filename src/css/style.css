@@ -1,25 +1,21 @@
-/******************************** Global Configuration ********************************/
-
 * {
-    box-sizing: border-box;
-    word-break: break-word;
+  box-sizing: border-box;
+  word-break: break-word;
 
-    --white-base: #FFFFFF;
-    --black-base: #000000;
-    --blue-base: #14073A;
-    --blue-button: #478EA5;
-    --blue-light: #f1f4f6;
+  --white-base: #ffffff;
+  --black-base: #000000;
+  --blue-base: #14073a;
+  --blue-button: #478ea5;
+  --blue-light: #f1f4f6;
 }
 
 body {
-    background-color: var(--blue-base);
-/*     background-image: linear-gradient(to bottom right, var(--blue-base), var(--white-base)); 
-    background-image:  url(https://i.imgur.com/EbMZ1ET.jpg);*/
-    font-family: 'Raleway', sans-serif;
-    font-style: normal;
-    font-weight: 400;
+  background-color: var(--blue-base);
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 400;
 }
 
 button:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
