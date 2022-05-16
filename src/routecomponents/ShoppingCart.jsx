@@ -27,8 +27,11 @@ export default function ShoppingCart() {
       newQuantity < 0 ||
       typeof newQuantity !== "number" ||
       newQuantity % 1 !== 0
-    )
+    ) {
+      if (newQuantity === null) return;
+
       newQuantity = parseInt(prompt("Insira um valor válido:"));
+    }
 
     let metaShoppingCart = [...shoppingCart];
 
