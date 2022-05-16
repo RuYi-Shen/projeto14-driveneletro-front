@@ -13,6 +13,8 @@
 
 body {
     background-color: var(--blue-base);
+/*     background-image: linear-gradient(to bottom right, var(--blue-base), var(--white-base)); 
+    background-image:  url(https://i.imgur.com/EbMZ1ET.jpg);*/
     font-family: 'Raleway', sans-serif;
     font-style: normal;
     font-weight: 400;

@@ -4,7 +4,7 @@ import axios from "axios";
 import styled from "styled-components";
 
 import UserContext from "../contexts/UserContext.js";
-import logoutButton from "./../assets/icon_logout.png";
+import goBackIcon from "./../assets/icon_back.png";
 import editIcon from "./../assets/icon_edit.png";
 
 export default function ShoppingCart() {
@@ -67,6 +67,7 @@ export default function ShoppingCart() {
   }
 
   function emptyCart() {
+    if(!window.confirm("Deseja esvaziar o carrinho?")) return;
     setShoppingCart([]);
 
     const url = "https://projeto14-driveneletro.herokuapp.com/shoppingcart";
@@ -120,7 +121,7 @@ export default function ShoppingCart() {
       <header>
         <h1>Carrinho de compras</h1>
         <img
-          src={logoutButton}
+          src={goBackIcon}
           alt="logoutButton"
           onClick={() => navigate("/userhome")}
         />
@@ -147,13 +148,13 @@ export default function ShoppingCart() {
         })}
       </article>
       <ButtonContainer>
-        <ShoppingCartButton onClick={()=>navigate("/userhome")}>
+        {/* <ShoppingCartButton onClick={()=>navigate("/userhome")}>
           Voltar
-        </ShoppingCartButton>
-        <ShoppingCartButton onClick={buyProducts}>
+        </ShoppingCartButton> */}
+        <ShoppingCartButton className="confirm" onClick={buyProducts}>
           Confirmar compras
         </ShoppingCartButton>
-        <ShoppingCartButton onClick={emptyCart}>
+        <ShoppingCartButton className="cancel" onClick={emptyCart}>
           Limpar o carrinho
         </ShoppingCartButton>
       </ButtonContainer>
@@ -178,15 +179,16 @@ const Screen = styled.section`
   }
   article {
     margin-top: 25px;
-    margin-bottom: 13px;
+    margin-bottom: 25px;
     background-color: #e5e5e5;
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 170px);
+    height: calc(100vh - 172px);
     border-radius: 5px;
     overflow-y: scroll;
     position: relative;
     padding: 23px 12px 10px 12px;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.9);
     menu {
       display: flex;
       /* justify-content: space-between; */
@@ -196,6 +198,7 @@ const Screen = styled.section`
       position: relative;
       background-color: #478ea5;
       border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
       section {
         display: flex;
         flex-direction: column;
@@ -225,14 +228,23 @@ const ButtonContainer = styled.div`
 `;
 
 const ShoppingCartButton = styled.button`
-  width: 160px;
-  height: 66px;
-  background: #478ea5;
+  width: 48%;
+  height: 46px;
+  //background: #478ea5;
   border-radius: 5px;
   border: none;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 18px;
   color: #ffffff;
+  //box-shadow: 2px 2px 5px rgba(255, 255, 255, 0.5);
+
+  &.confirm {
+    background: #3bcb3be0;
+  }
+
+  &.cancel {
+    background: #ff0000da;
+  }
 `;
 
 const ProductImage = styled.img`
